@@ -35,3 +35,7 @@ The dataset provides information such as demographics, churn score and churn sta
 ## Retention Strategies
 - Loyalty Program: Customers with month-to-month contract type are significantly likely to churn as compared to customers with one-year and two-year contract type. This should be taken in consideration on when creating the loyalty program.
 - Premium Tech Support: Most of the customers that churned do have premium tech support, IBM should provide this service to all customers.
+
+![Main Dashboard](https://github.com/MarcSM98/Telco_Customer_Churn/assets/174916195/f5ef0544-d259-481b-b255-c7e82c8bfe5b)
+
+![Side Dashboard](https://github.com/MarcSM98/Telco_Customer_Churn/assets/174916195/c05cfd33-1618-497c-bc38-0d038a42b418)
