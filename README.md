@@ -9,7 +9,8 @@ Customer Churn Analysis is a process to determine the likelihood of customers th
 - Identify preventative measures against customer churn?
 
 ## Data Source
-The dataset provides information such as demographics, churn score and churn status.
+[telco.csv](https://github.com/user-attachments/files/16201296/telco.csv)
+
 
 
 ## Tools
