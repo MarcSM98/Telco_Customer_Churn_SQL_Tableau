@@ -1,4 +1,21 @@
-1. Data Cleaning
+---- Data Cleaning
+UPDATE telco
+SET Churn_Category =
+CASE WHEN 'Churn_Reason' IN('Moved', 'Deceased') THEN 'Personal Circumstances'
+             WHEN 'Churn_Reason' = "Don't Know" THEN 'Personal Unknown'
+    WHEN 'Churn_Reason' = 'Poor expertise of online support' THEN 'Dissatisfaction'
+END;
+
+-- Replace NULL values with NA under Churn Reason column
+UPDATE telco
+SET Churn_Reason="NA"
+WHERE Churn_Reason IS NULL;
+
+
+-- Replace NULL values with NA under Churn Reason
+UPDATE telco
+SET Churn_Category ="NA"
+Where Churn_Category IS NULL
 
 -- Find Duplicates
 
@@ -13,15 +30,14 @@ SELECT
     COUNT(CASE WHEN Gender = 'Male' THEN 1 END) AS male,
     COUNT(CASE WHEN Gender = 'Female' THEN 1 END) AS female
 FROM telco
-
-***
+    
 
 SELECT
     COUNT(CASE WHEN Senior_Citizen = 'Yes' THEN 1 END) AS Yes_Senior,
     COUNT(CASE WHEN Senior_Citizen = 'No' THEN 1 END) AS No_Senior
 FROM telco
 
----- Rank Seniority ------------------------------------------------------------------------------------------------------
+-- Rank Seniority
 
 WITH cte AS
 (
@@ -57,13 +73,13 @@ ROUND((100.0 * Churned_Customers / Total_Customers), 2) AS Churned_Percent
                          THEN Customer_ID END) AS Churned_Customers
 FROM telco) as cte;
 
----- Find the average monthly charges for churned customers
+-- Find the average monthly charges for churned customers
 
 SELECT ROUND(AVG(Monthly_Charge), 2) as Avg_Charges
 FROM telco
 WHERE Customer_Status = 'Churned';
 
----- Find the average customers that joined, stayed, churned
+-- Find the average customers that joined, stayed, churned
 
 SELECT
 ROUND(AVG(CASE WHEN Customer_Status = 'Joined' THEN Age END), 2) AS Avg_Age_Joined,
@@ -110,38 +126,6 @@ AND Churn_Category LIKE '%Other%'
 GROUP BY 1, 2
 ORDER BY 3 DESC
 
-UPDATE telco -----------------------------------------------------------------------------------------
-SET Churn_Category =
-CASE WHEN 'Churn_Reason' IN('Moved', 'Deceased') THEN 'Personal Circumstances'
-             WHEN 'Churn_Reason' = "Don't Know" THEN 'Personal Unknown'
-    WHEN 'Churn_Reason' = 'Poor expertise of online support' THEN 'Dissatisfaction'
-END;
-
-
----- Replace NULL values with NA under Churn Reason column
-UPDATE telco
-SET Churn_Reason="NA"
-WHERE Churn_Reason IS NULL;
-
-
----- Replace NULL values with NA under Churn Reason
-UPDATE telco
-SET Churn_Category ="NA"
-Where Churn_Category IS NULL
-
----- Calculate the percentage for churn customers ----------------------------------------------------------------------------
-WITH cte AS
-(
-select count(Customer_ID)  AS cnt_customers
-FROM telco
-WHERE Customer_Status = 'Churned'
-)
-
-SELECT Churn_Category,
-(SELECT cnt_customers FROM cte) as cnt_customers,
-((SELECT cnt_customers FROM cte) / 7043) * 100 AS percent
-FROM telco
-
 
 -- Count the net retention of customers this month (Round)
 
@@ -159,7 +143,7 @@ END
  FROM telco
 ) as cte;
 
----- Calculate the percent of net retention
+-- Calculate the percent of net retention
 
 SELECT Total_Customers, Churn_Customers,
                ROUND((100 * churn_customers / total_customers), 0) as Churn_Percent
@@ -200,7 +184,7 @@ WHERE Customer_Status = 'Churned'
 GROUP BY Churn_Category
 ORDER BY Churn_Percentage DESC;
 
----- What offer did churned customers have
+-- What offer did churned customers have
 
 SELECT  
     Offer,
@@ -210,7 +194,7 @@ WHERE Customer_Status = 'Churned'
 GROUP BY Offer
 ORDER BY Churned DESC;
 
----- What internet type did churned customers have
+-- What internet type did churned customers have
 
 SELECT
     Internet_Type,
@@ -221,7 +205,7 @@ WHERE Customer_Status = 'Churned'
 GROUP BY Internet_Type
 ORDER BY Churned DESC;
 
--------- Find the total number of internet service based on the customer status
+-- Find the total number of internet service based on the customer status
 
 WITH CountData AS (
   SELECT
@@ -248,7 +232,7 @@ FROM CountData
 JOIN TotalPerStatus ON CountData.Customer_Status = TotalPerStatus.Customer_Status
 ORDER BY CountData.Customer_Status DESC, CountData.Internet_Service;
 
--------- Avg_Monthly_GB_Download
+-- Avg_Monthly_GB_Download
 
 SELECT
 Customer_Status,
@@ -259,7 +243,7 @@ GROUP BY Customer_Status
 ORDER BY Average_Download DESC;
 
 
----- Did churned customers have premium tech support
+-- Did churned customers have premium tech support
 
 SELECT
     Premium_Tech_Support,
@@ -270,7 +254,7 @@ WHERE Customer_Status = 'Churned'
 GROUP BY Premium_Tech_Support
 ORDER BY Churned DESC;
 
----- What contract were churned customers on
+-- What contract were churned customers on
 
 SELECT
     Contract,
@@ -281,7 +265,7 @@ WHERE Customer_Status = 'Churned'
 GROUP BY Contract
 ORDER BY Churned DESC;
 
--------- Contract
+-- Contract
 
 WITH TotalStatus AS (
   SELECT
