@@ -48,4 +48,4 @@ Customer Churn Analysis is a process to determine the likelihood of customers th
 
 ![Side Dashboard](https://github.com/MarcSM98/Telco_Customer_Churn/assets/174916195/c05cfd33-1618-497c-bc38-0d038a42b418)
 
-##### - [Tableau Dashboard]([https://public.tableau.com/app/profile/kelechi.uzoukwu/viz/TelcoChurn_16708698866470/othermaindash4](https://public.tableau.com/app/profile/marcus.sim2726/vizzes))
+[Tableau Dashboard](https://public.tableau.com/app/profile/marcus.sim2726/vizzes)
