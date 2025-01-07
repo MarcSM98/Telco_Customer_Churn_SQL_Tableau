@@ -1,4 +1,4 @@
-# Customer Telco Churn Analysis
+# Telco Customer Churn Dashboard
 
 ## Introduction
 
